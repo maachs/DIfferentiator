@@ -18,7 +18,7 @@ int Dtor(Node_t* node)
 
 }
 
-Node_t* MakeNode(int type, int value, Node_t* left, Node_t* right)
+Node_t* MakeNode(int type, NodeValue value, Node_t* left, Node_t* right)
 {
     Node_t* node = (Node_t*)calloc(1, sizeof(Node_t));
 
@@ -30,6 +30,7 @@ Node_t* MakeNode(int type, int value, Node_t* left, Node_t* right)
     }
 
     node->type = type;
+
     node->value = value;
 
     node->left = left;
@@ -37,3 +38,4 @@ Node_t* MakeNode(int type, int value, Node_t* left, Node_t* right)
 
     return node;
 }
+

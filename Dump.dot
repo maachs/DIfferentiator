@@ -2,57 +2,45 @@ digraph G
 {
  rankdir = UD
 bgcolor = "aquamarine3"
-"00B26A38" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "/"];
-"00B26C78" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "-"];
-"00B26D18" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "*"];
-"00B26C58"[shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "+"];
-"00B204B0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "*"];
-"00B21720" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "2"];
-"00B204B0"->"00B21720"
-"00B21700" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "^"];
-"00B216E0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "x"];
-"00B21700"->"00B216E0"
-"00B216C0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "1"];
-"00B21700"->"00B216C0"
-"00B204B0"->"00B21700"
-"00B26C58"->"00B204B0"
-"00B216A0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "0"];
-"00B26C58"->"00B216A0"
-"00B26D18"->"00B26C58"
-"00B26A98" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "-"];
-"00B21560" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "1000"];
-"00B26A98"->"00B21560"
-"00B21528" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "7"];
-"00B26A98"->"00B21528"
-"00B26D18"->"00B26A98"
-"00B26C78"->"00B26D18"
-"00B26C18" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "*"];
-"00B26CF8"[shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "+"];
-"00B21600" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "^"];
-"00B215E0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "x"];
-"00B21600"->"00B215E0"
-"00B215C0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "2"];
-"00B21600"->"00B215C0"
-"00B26CF8"->"00B21600"
-"00B215A0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "3"];
-"00B26CF8"->"00B215A0"
-"00B26C18"->"00B26CF8"
-"00B26BF8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "/"];
-"00B269B8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "0"];
-"00B26BF8"->"00B269B8"
-"00B26CD8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "0"];
-"00B26BF8"->"00B26CD8"
-"00B26C18"->"00B26BF8"
-"00B26C78"->"00B26C18"
-"00B26A38"->"00B26C78"
-"00B26AB8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "^"];
-"00B26A98" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "-"];
-"00B21560" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "1000"];
-"00B26A98"->"00B21560"
-"00B21528" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "7"];
-"00B26A98"->"00B21528"
-"00B26AB8"->"00B26A98"
-"00B26978" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "2"];
-"00B26AB8"->"00B26978"
-"00B26A38"->"00B26AB8"
+"00B06A78" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ / | addr = 00B06A78}"];
+"00B06A38" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ - | addr = 00B06A38}"];
+"00B06978" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B06978}"];
+"00B004B0" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B004B0}"];
+"00B01758" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 2 | addr = 00B01758}"];
+"00B004B0"->"00B01758"
+"00B01738" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ ^ | addr = 00B01738}"];
+"00B01718" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ x | addr = 00B01718}"];
+"00B01738"->"00B01718"
+"00B016F8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 1 | addr = 00B016F8}"];
+"00B01738"->"00B016F8"
+"00B004B0"->"00B01738"
+"00B06978"->"00B004B0"
+"00B06C78" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{+| addr = 00B06C78}"];
+"00B06958" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 3 | addr = 00B06958}"];
+"00B06C78"->"00B06958"
+"00B06B38" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ x | addr = 00B06B38}"];
+"00B06C78"->"00B06B38"
+"00B06978"->"00B06C78"
+"00B06A38"->"00B06978"
+"00B06A18" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{+| addr = 00B06A18}"];
+"00B069D8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 2 | addr = 00B069D8}"];
+"00B06A18"->"00B069D8"
+"00B06D18" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ ^ | addr = 00B06D18}"];
+"00B06BF8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ x | addr = 00B06BF8}"];
+"00B06D18"->"00B06BF8"
+"00B06CF8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 2 | addr = 00B06CF8}"];
+"00B06D18"->"00B06CF8"
+"00B06A18"->"00B06D18"
+"00B06A38"->"00B06A18"
+"00B06A78"->"00B06A38"
+"00B069F8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ ^ | addr = 00B069F8}"];
+"00B06C78" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{+| addr = 00B06C78}"];
+"00B06958" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 3 | addr = 00B06958}"];
+"00B06C78"->"00B06958"
+"00B06B38" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ x | addr = 00B06B38}"];
+"00B06C78"->"00B06B38"
+"00B069F8"->"00B06C78"
+"00B06A98" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ 2 | addr = 00B06A98}"];
+"00B069F8"->"00B06A98"
+"00B06A78"->"00B069F8"
 }

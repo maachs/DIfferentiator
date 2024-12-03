@@ -10,26 +10,30 @@ void PrintInOrder(Node_t* node)
 
     if(node->type == OP)
     {
-        if(node->value == ADD)
+        if(node->value.op == ADD)
         {
             printf("+");
         }
-        else if(node->value == SUB)
+        else if(node->value.op == SUB)
         {
             printf("-");
         }
-        else if(node->value == DIV)
+        else if(node->value.op == DIV)
         {
             printf("/");
         }
-        else if(node->value == MUL)
+        else if(node->value.op == MUL)
         {
             printf("*");
+        }
+        else if(node->value.op == POW)
+        {
+            printf("^");
         }
     }
     else if(node->type == NUM)
     {
-        printf("%d", node->value);
+        printf("%lg", node->value.num);
     }
     else if(node->type == VAR)
     {
@@ -46,7 +50,7 @@ int GraphicDump(Node_t* node, const char** argv)
     assert(node);
     assert(argv);
 
-    FILE* dump = fopen(argv[1], "w");
+    FILE* dump = fopen(argv[2], "w");
 
     fprintf(dump, "digraph G\n{\n rankdir = UD\nbgcolor = \"aquamarine3\"\n");
 
@@ -73,43 +77,43 @@ int DrawNode(Node_t* node, FILE* dump)
 
     if(node->type == OP)
     {
-        if(node->value == ADD)
+        if(node->value.op == ADD)
         {
             fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"+\"];\n", node);
+            " label = \"{+| addr = %p}\"];\n", node, node);
         }
-        else if(node->value == SUB)
+        else if(node->value.op == SUB)
         {
             fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"-\"];\n", node);
+            " label = \"{ - | addr = %p}\"];\n", node, node);
         }
-        else if(node->value == DIV)
+        else if(node->value.op == DIV)
         {
             fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"/\"];\n", node);
+            " label = \"{ / | addr = %p}\"];\n", node, node);
         }
-        else if(node->value == MUL)
+        else if(node->value.op == MUL)
         {
             fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"*\"];\n", node);
+            " label = \"{ * | addr = %p}\"];\n", node, node);
         }
-        else if(node->value == POW)
+        else if(node->value.op == POW)
         {
             fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"^\"];\n", node);
+            " label = \"{ ^ | addr = %p}\"];\n", node, node);
         }
     }
 
     if(node->type == NUM)
     {
         fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"%d\"];\n", node, node->value);
+            " label = \"{ %lg | addr = %p}\"];\n", node, node->value.num, node);
     }
 
     if(node->type == VAR)
     {
         fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"x\"];\n", node);
+            " label = \"{ x | addr = %p}\"];\n", node, node);
     }
 
     if(node->left != NULL)
