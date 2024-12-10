@@ -1,13 +1,13 @@
 #include "Simplifier.h"
 
-Node_t* Simplifier(Node_t* node)
+Node_t* SimplifyExpTree(Node_t* node, const char** argv)
 {
     assert(node);
 
     if(node->left == NULL && node->right == NULL) return node;
 
-    node->left = Simplifier(node->left);
-    node->right = Simplifier(node->right);
+    node->left = SimplifyExpTree(node->left, argv);
+    node->right = SimplifyExpTree(node->right, argv);
 
     if(node->type == OP)
     {
@@ -18,42 +18,42 @@ Node_t* Simplifier(Node_t* node)
                 node->type = NUM;
                 node->value.num = node->left->value.num + node->right->value.num;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             else if(node->value.op == SUB)
             {
                 node->type = NUM;
                 node->value.num = node->left->value.num - node->right->value.num;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             else if(node->value.op == POW)
             {
                 node->type = NUM;
                 node->value.num = pow(node->left->value.num, node->right->value.num);
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             else if(node->value.op == MUL)
             {
                 node->type = NUM;
                 node->value.num = node->left->value.num * node->right->value.num;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             else if(node->value.op == DIV)
             {
                 node->type = NUM;
                 node->value.num = node->left->value.num / node->right->value.num;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             else if(node->value.op == POW)
             {
                 node->type = NUM;
                 node->value.num = pow(node->left->value.num, node->right->value.num);
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
         }
         else if(node->left->type == VAR && node->right->type == NUM)
@@ -63,14 +63,14 @@ Node_t* Simplifier(Node_t* node)
                 node->type = NUM;
                 node->value.num = 0;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             if(node->value.op == MUL && CompareNum(node->right->value.num, 1))
             {
                 node->type = VAR;
                 node->value.var_num = X;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
         }
         else if(node->right->type == VAR && node->left->type == NUM)
@@ -80,39 +80,47 @@ Node_t* Simplifier(Node_t* node)
                 node->type = NUM;
                 node->value.num = 0;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
             if(node->value.op == MUL && CompareNum(node->left->value.num, 1))
             {
                 node->type = VAR;
                 node->value.var_num = X;
 
-                DtorSimplyNode(node);
+                DtorSimplyNodes(node);
             }
         }
         else if(node->left->type == NUM && CompareNum(node->left->value.num, 1) && node->value.op == MUL && node->right->type == OP)
         {
-            node = node->right;
-
-            DtorSimplyNode(node->left);
+            TreeDtor(node->left);
+            node = Copy(node->right);
         }
         else if(node->right->type == NUM && CompareNum(node->right->value.num, 1) && (node->value.op == MUL || node->value.op == DIV) && node->left->type == OP)
         {
-            node = node->left;
-
-            DtorSimplyNode(node->left);
+            TreeDtor(node->right);
+            node = Copy(node->left);
         }
         else if(node->left->type == NUM && CompareNum(node->left->value.num, 0) && node->value.op == ADD)
         {
-            node = node->right;
-
-            DtorSimplyNode(node->left);
+            TreeDtor(node->left);
+            node = Copy(node->right);
         }
         else if(node->right->type == NUM && CompareNum(node->right->value.num, 0) && node->value.op == ADD)
         {
-            node = node->left;
-
-            DtorSimplyNode(node->right);
+            TreeDtor(node->right);
+            node = Copy(node->left);
+        }
+        else if(node->left->type == NUM && CompareNum(node->left->value.num, 0) && node->type == OP && node->value.op == MUL)
+        {
+            node->type = NUM;
+            node->value.num = 0;
+            DtorSimplyNodes(node);
+        }
+        else if(node->right->type == NUM && CompareNum(node->right->value.num, 0) && node->type == OP && node->value.op == MUL)
+        {
+            node->type = NUM;
+            node->value.num = 0;
+            DtorSimplyNodes(node);
         }
 
     }
@@ -127,12 +135,12 @@ int CompareNum(double val_1, double val_2)
     return 0;
 }
 
-void DtorSimplyNode(Node_t* node)
+void DtorSimplyNodes(Node_t* node)
 {
     assert(node);
 
-    Dtor(node->left);
-    Dtor(node->right);
+    TreeDtor(node->left);
+    TreeDtor(node->right);
 
     node->left = NULL;
     node->right = NULL;

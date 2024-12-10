@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-int     Dtor    (Node_t* node);
+int     TreeDtor    (Node_t* node);
 Node_t* MakeNode(int type, NodeValue value, Node_t* left, Node_t* right);
 
 #endif

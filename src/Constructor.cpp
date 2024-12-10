@@ -1,14 +1,14 @@
 #include "Constructor.h"
 
-int Dtor(Node_t* node)
+int TreeDtor(Node_t* node)
 {
     if(!node)
     {
         return 0;
     }
 
-    Dtor(node->left);
-    Dtor(node->right);
+    TreeDtor(node->left);
+    TreeDtor(node->right);
 
     free(node);
 

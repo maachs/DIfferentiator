@@ -1,10 +1,10 @@
 #include "Diff.h"
 
-Node_t* Diff(Node_t* node, Node_t* diff, const char** argv)
+Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
 {
     assert(argv);
 
-    GraphicDump(node, argv);
+    //GraphicDump(node, argv);
 
     if(node->type == NUM)
     {
@@ -32,10 +32,10 @@ Node_t* Diff(Node_t* node, Node_t* diff, const char** argv)
             }
             case MUL:
             {
-                Node_t* dl_mul = DIFF_(node->left);
+                Node_t* dl_mul = DIFF_(node->left); // TODO DIFF_(left)
                 Node_t* dr_mul = DIFF_(node->right);
 
-                Node_t* copy_left_mul  = Copy(node->left);
+                Node_t* copy_left_mul  = Copy(node->left); // TODO COPY(left)
                 Node_t* copy_right_mul = Copy(node->right);
 
                 return ADD_(MUL_(dl_mul, copy_right_mul), MUL_(dr_mul, copy_left_mul));

@@ -2,36 +2,36 @@
 
 int main(const int argc, const char** argv)
 {
-    Read read = {};
+    Token_t token = {};
     struct stat buffer = {};
 
     if(argc != 3)
     {
-        printf("argc error\n");
+        printf("usage: argv[0] <%s>\n", argv[0]);
 
         return -1;
     }
 
     stat(argv[1], &buffer);
 
-    ReadExpression(&read, argv, buffer.st_size);
+    ReadExpression(&token, argv, buffer.st_size); // read from stdin
 
-    Node_t* root = GetG(&read);
+    Node_t* root = GetGrammar(&token);
 
-    GraphicDump(root, argv);
+    root = SimplifyExpTree(root, argv);
 
-    Node_t* diff = Diff(root, diff, argv);
+    //GraphicDump(root, argv);
 
-    root = Simplifier(root);
-    diff = Simplifier(diff);
+    //Node_t* diff = DiffExpression(root, diff, argv);
+    //PrintInOrder(diff);
+    //diff = SimplifyExpTree(diff, argv);
 
     PrintInOrder(root);
     printf("\n");
-    PrintInOrder(diff);
+    //PrintInOrder(diff);
     printf("\n");
 
-    GraphicDump(diff, argv);
-
-    Dtor(root);
-    //Dtor(diff);
+    //GraphicDump(diff, argv);
+    TreeDtor(root);
+    //TreeDtor(diff);
 }

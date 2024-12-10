@@ -9,7 +9,7 @@ void PrintInOrder(Node_t* node)
     PrintInOrder(node->left);
 
     if(node->type == OP)
-    {
+    { // TODO PrintOp
         if(node->value.op == ADD)
         {
             printf("+");
@@ -64,7 +64,7 @@ int GraphicDump(Node_t* node, const char** argv)
 
     //MySystem("dot Dump.dot -Tpng -o Dump%03d.png", count);
 
-    system("dot Dump.dot -Tpng -o Dump.png");
+    //system("dot Dump.dot -Tpng -o Dump.png");
 
     //count++;
 
@@ -77,43 +77,19 @@ int DrawNode(Node_t* node, FILE* dump)
 
     if(node->type == OP)
     {
-        if(node->value.op == ADD)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{+| addr = %p}\"];\n", node, node);
-        }
-        else if(node->value.op == SUB)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ - | addr = %p}\"];\n", node, node);
-        }
-        else if(node->value.op == DIV)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ / | addr = %p}\"];\n", node, node);
-        }
-        else if(node->value.op == MUL)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ * | addr = %p}\"];\n", node, node);
-        }
-        else if(node->value.op == POW)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ ^ | addr = %p}\"];\n", node, node);
-        }
+        DrawOperation(node, dump);
     }
 
     if(node->type == NUM)
     {
         fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ %lg | addr = %p}\"];\n", node, node->value.num, node);
+            " label = \"{ %lg | addr = %p | { left = %p | right = %p}}\"];\n", node, node->value.num, node, node->left, node->right);
     }
 
     if(node->type == VAR)
     {
         fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ x | addr = %p}\"];\n", node, node);
+            " label = \"{ x | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
     }
 
     if(node->left != NULL)
@@ -129,6 +105,39 @@ int DrawNode(Node_t* node, FILE* dump)
         fprintf(dump, "\"%p\"->\"%p\"\n", node, node->right);
     }
 
+    return 0;
+}
+
+int DrawOperation(Node_t* node, FILE* dump)
+{
+    assert(node);
+    assert(dump);
+
+    if(node->value.op == ADD)
+        {
+            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+            " label = \"{+| addr = %p | left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
+        }
+        else if(node->value.op == SUB)
+        {
+            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+            " label = \"{ - | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
+        }
+        else if(node->value.op == DIV)
+        {
+            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+            " label = \"{ / | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
+        }
+        else if(node->value.op == MUL)
+        {
+            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+            " label = \"{ * | addr = %p | {left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
+        }
+        else if(node->value.op == POW)
+        {
+            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+            " label = \"{ ^ | addr = %p | {left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
+        }
     return 0;
 }
 

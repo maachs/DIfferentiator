@@ -5,23 +5,23 @@ flags = -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equa
 differentiator: main.o Constructor.o Dump.o Diff.o ReadExpression.o Simplifier.o
 	g++ main.o Constructor.o Dump.o Diff.o ReadExpression.o Simplifier.o
 
-main.o: main.cpp
-	g++ -c $(flags) main.cpp
+main.o: ./src/main.cpp
+	g++ -I ./include/ -c $(flags) ./src/main.cpp
 
-Constructor.o: Constructor.cpp
-	g++ -c $(flags) Constructor.cpp
+Constructor.o: ./src/Constructor.cpp
+	g++ -I ./include/ -c $(flags) ./src/Constructor.cpp
 
-Dump.o: Dump.cpp
-	g++ -c $(flags) Dump.cpp
+Dump.o: ./src/Dump.cpp
+	g++ -I ./include/ -c $(flags) ./src/Dump.cpp
 
-Diff.o: Diff.cpp
-	g++ -c $(flags) Diff.cpp
+Diff.o: ./src/Diff.cpp
+	g++ -I ./include/ -c $(flags) ./src/Diff.cpp
 
-ReadExpression.o: ReadExpression.cpp
-	g++ -c $(flags) ReadExpression.cpp
+ReadExpression.o: ./src/ReadExpression.cpp
+	g++ -I ./include/ -c $(flags) ./src/ReadExpression.cpp
 
-Simplifier.o: Simplifier.cpp
-	g++ -c $(flags) Simplifier.cpp
+Simplifier.o: ./src/Simplifier.cpp
+	g++ -I ./include/ -c $(flags) ./src/Simplifier.cpp
 
 clean:
 	rm -rf *.o *.exe

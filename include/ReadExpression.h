@@ -3,14 +3,25 @@
 
 #include "Globals.h"
 
-int ReadExpression(Read* read, const char** argv, int size);
+int ReadExpression(Token_t* token, const char** argv, int size);
+int FillNodes     (Token_t* token, char* expression, int size);
+int GetFunction   (Token_t* token, char* expression);
+int GetOperation  (Token_t* token, char* expression);
 
-Node_t* GetG(Read* read);
-Node_t* GetE(Read* read);
-Node_t* GetN(Read* read);
-Node_t* GetT(Read* read);
-Node_t* GetP(Read* read);
-Node_t* GetV(Read* read);
-Node_t* GetD(Read* read);
+Node_t* GetGrammar (Token_t* token);
+Node_t* GetEquation(Token_t* token);
+Node_t* GetNumber  (Token_t* token);
+Node_t* GetT(Token_t* token);
+Node_t* GetP(Token_t* token);
+Node_t* GetVariable(Token_t* token);
+Node_t* GetD(Token_t* token);
+
+#define NEW_FUNC_(var, delta)             \
+    token->str[token->count].type = OP;      \
+    token->str[token->count].value.op = var; \
+    token->str[token->count].left = NULL;    \
+    token->str[token->count].right = NULL;   \
+    token->count++ ;                         \
+    token->point += delta;
 
 #endif
