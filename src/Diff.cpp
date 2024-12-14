@@ -32,10 +32,10 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
             }
             case MUL:
             {
-                Node_t* dl_mul = DIFF_(node->left); // TODO DIFF_(left)
+                Node_t* dl_mul = DIFF_(node->left);
                 Node_t* dr_mul = DIFF_(node->right);
 
-                Node_t* copy_left_mul  = Copy(node->left); // TODO COPY(left)
+                Node_t* copy_left_mul  = Copy(node->left);
                 Node_t* copy_right_mul = Copy(node->right);
 
                 return ADD_(MUL_(dl_mul, copy_right_mul), MUL_(dr_mul, copy_left_mul));
@@ -52,66 +52,40 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
             }
             case POW:
             {
-                return MUL_(Copy(node->right), POW_(Copy(node->left), node->right->value.num - 1));
+                return MUL_(Copy(node), DIFF_(MUL_(LN_(node->left), Copy(node->right))));
             }
-            /*case SIN:
+            case SIN:
             {
-                return MakeNode(OP, MUL, MakeNode(NUM, 1, NULL, NULL, diff),
-                                         MakeNode(OP, MUL, MakeNode(OP, COS, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, node->left->parent), NULL, diff),
-                                                           Diff(node->left, diff, argv), diff), diff);
+                return MUL_(NUM_(1), MUL_(COS_(Copy(node->right)), DIFF_(node->right)));
             }
             case COS:
             {
-                return MakeNode(OP, MUL, MakeNode(NUM, -1, NULL, NULL, diff),
-                                         MakeNode(OP, MUL, MakeNode(OP, SIN, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, node->left->parent), NULL, diff),
-                                                           Diff(node->left, diff, argv), diff), diff);
+                return MUL_(NUM_(-1), MUL_(SIN_(Copy(node->right)), DIFF_(node->right)));
             }
             case TG:
             {
-                return MakeNode(OP, DIV, MakeNode(OP, MUL, MakeNode(NUM, 1, NULL, NULL, diff), Diff(node->left, diff, argv), diff),
-                                         MakeNode(OP, POW, MakeNode(OP, COS, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, diff), NULL, diff),
-                                                           MakeNode(NUM, 2, NULL, NULL, diff), diff), diff);
+                return MUL_(DIV_(NUM_(1), POW_(COS_(Copy(node->right)), 2)), DIFF_(node->right));
             }
             case CTG:
             {
-                return MakeNode(OP, DIV, MakeNode(OP, MUL, MakeNode(NUM, -1, NULL, NULL, diff), Diff(node->left, diff, argv), diff),
-                                         MakeNode(OP, POW, MakeNode(OP, SIN, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, diff), NULL, diff),
-                                                           MakeNode(NUM, 2, NULL, NULL, diff), diff), diff);
+                return MUL_(DIV_(NUM_(-1), POW_(SIN_(Copy(node->right)), 2)), DIFF_(node->right));
             }
             case LOG:
             {
-                return MakeNode(OP, DIV, Diff(node->right, diff, argv),
-                                         MakeNode(OP, MUL, MakeNode(OP, LOG, MakeNode(OP, EXP, NULL, NULL, diff), node->left, diff),
-                                                           MakeNode(node->right->type, node->right->value, node->left, node->right, diff), diff), diff);
+                return MUL_(DIV_(NUM_(1), MUL_(LN_(node->left), Copy(node->right))), DIFF_(node->right));
             }
-            case EXP_F:
+            case LN:
             {
-                return MakeNode(OP, MUL, MakeNode(OP, LOG, MakeNode(OP, EXP, NULL, NULL, diff), node->left, diff),
-                                         MakeNode(OP, MUL, MakeNode(node->type, node->value, node->left, node->right, diff),
-                                                           Diff(node->right, diff, argv), diff), diff);
+                return MUL_(DIV_(NUM_(1), Copy(node->right)), DIFF_(node->right));
             }
             case SH:
             {
-                return MakeNode(OP, MUL, MakeNode(OP, CH, node->left, NULL, diff),
-                                         Diff(node->left, diff, argv), diff);
+                return MUL_(CH_(Copy(node->right)), DIFF_(node->right));
             }
             case CH:
             {
-                return MakeNode(OP, MUL, MakeNode(OP, SH, node->left, NULL, diff),
-                                         Diff(node->left, diff, argv), diff);
+                return MUL_(SH_(Copy(node->right)), DIFF_(node->right));
             }
-            case TH:
-            {
-                return MakeNode(OP, DIV, MakeNode(OP, MUL, MakeNode(NUM, 1, NULL, NULL, diff), Diff(node->left, diff, argv), diff),
-                                         MakeNode(OP, POW, MakeNode(OP, CH, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, diff), NULL, diff),
-                                                           MakeNode(NUM, 2, NULL, NULL, diff), diff), diff);
-            }
-            case CTH:
-            {
-                return MakeNode(OP, DIV, MakeNode(OP, MUL, MakeNode(NUM, -1, NULL, NULL, diff), Diff(node->left, diff, argv), diff),
-                                         MakeNode(OP, POW, MakeNode(OP, SH, MakeNode(node->left->type, node->left->value, node->left->left, node->left->right, diff), NULL, diff),
-                                                           MakeNode(NUM, 2, NULL, NULL, diff), diff), diff);
-            }*/
             default:
                 printf("cannot defined operation %c\n", node->value.op);
                 return NULL;

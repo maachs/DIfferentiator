@@ -14,16 +14,17 @@ int main(const int argc, const char** argv)
 
     stat(argv[1], &buffer);
 
-    ReadExpression(&token, argv, buffer.st_size); // read from stdin
+    ReadExpression(&token, argv, buffer.st_size);
 
     Node_t* root = GetGrammar(&token);
-
-    root = SimplifyExpTree(root, argv);
+    PrintInOrder(root);
+    printf("\n");
+    //root = SimplifyExpTree(root, argv);
 
     //GraphicDump(root, argv);
 
-    //Node_t* diff = DiffExpression(root, diff, argv);
-    //PrintInOrder(diff);
+    Node_t* diff = DiffExpression(root, diff, argv);
+    PrintInOrder(diff);
     //diff = SimplifyExpTree(diff, argv);
 
     PrintInOrder(root);
@@ -31,7 +32,9 @@ int main(const int argc, const char** argv)
     //PrintInOrder(diff);
     printf("\n");
 
-    //GraphicDump(diff, argv);
+    GraphicDump(diff, argv);
     TreeDtor(root);
-    //TreeDtor(diff);
+
+    TreeDtor(diff);
+    TokenDtor(&token);
 }

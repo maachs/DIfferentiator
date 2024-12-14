@@ -15,7 +15,17 @@ int TreeDtor(Node_t* node)
     node = NULL;
 
     return 0;
+}
 
+int TokenDtor(Token_t* token)
+{
+    assert(token);
+
+    free(token->str);
+
+    token->str = NULL;
+
+    return 0;
 }
 
 Node_t* MakeNode(int type, NodeValue value, Node_t* left, Node_t* right)

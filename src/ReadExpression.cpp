@@ -72,8 +72,8 @@ int FillNodes(Token_t* token, char* expression, int size)
         {
             NEW_FUNC_(CLOSE_BRACKETS, 1);
         }
-        GetOperation(token, expression);
-        GetFunction(token, expression);
+        FillOperation(token, expression);
+        FillFunction(token, expression);
 
         if(expression[token->point] == '$')
         {
@@ -84,7 +84,7 @@ int FillNodes(Token_t* token, char* expression, int size)
     return 0;
 }
 
-int GetFunction(Token_t* token, char* expression)
+int FillFunction(Token_t* token, char* expression)
 {
     if(expression[token->point] == 's' && expression[token->point + 1] == 'i' && expression[token->point + 2] == 'n')
     {
@@ -164,7 +164,7 @@ int GetFunction(Token_t* token, char* expression)
     return 0;
 }
 
-int GetOperation(Token_t* token, char* expression)
+int FillOperation(Token_t* token, char* expression)
 {
     if(expression[token->point] == '+')
     {
@@ -207,7 +207,7 @@ Node_t* GetEquation(Token_t* token)
 {
     Node_t* val = GetT(token);
 
-    if(token->str[token->point].value.op == ADD || token->str[token->point].value.op == SUB)
+    while(token->str[token->point].value.op == ADD || token->str[token->point].value.op == SUB)
     {
         int op = token->str[token->point].value.op;
 
@@ -217,17 +217,11 @@ Node_t* GetEquation(Token_t* token)
 
         if(op == ADD)
         {
-            NodeValue node_add = {};
-            node_add.op = ADD;
-
-            val = MakeNode(OP, node_add, val, val_1);
+            val = MakeNode(OP, NodeValue{.op = ADD}, val, val_1);
         }
         if(op == SUB)
         {
-            NodeValue node_sub = {};
-            node_sub.op = SUB;
-
-            val = MakeNode(OP, node_sub, val, val_1);
+            val = MakeNode(OP, NodeValue{.op = SUB}, val, val_1);
         }
     }
 
@@ -238,7 +232,7 @@ Node_t* GetT(Token_t* token)
 {
     Node_t* val = GetD(token);
 
-    if(token->str[token->point].value.op == MUL || token->str[token->point].value.op == DIV)
+    while(token->str[token->point].value.op == MUL || token->str[token->point].value.op == DIV)
     {
         int op = token->str[token->point].value.op;
 
@@ -248,17 +242,11 @@ Node_t* GetT(Token_t* token)
 
         if(op == MUL)
         {
-            NodeValue node_mul = {};
-            node_mul.op = MUL;
-
-            val = MakeNode(OP, node_mul, val, val_1);
+            val = MakeNode(OP, NodeValue{.op = MUL}, val, val_1);
         }
         if(op == DIV)
         {
-            NodeValue node_div = {};
-            node_div.op = DIV;
-
-            val = MakeNode(OP, node_div, val,val_1);
+            val = MakeNode(OP, NodeValue{.op = DIV}, val, val_1);
         }
     }
 
@@ -269,23 +257,67 @@ Node_t* GetD(Token_t* token)
 {
     Node_t* val = GetP(token);
 
-    if(token->str[token->point].value.op == POW)
+    while(token->str[token->point].value.op == POW)
     {
-        int op = token->str[token->point].value.op;
+        int op_pow = token->str[token->point].value.op;
 
         token->point++;
 
         Node_t* val_1 = GetP(token);
 
-        if(op == POW)
+        if(op_pow == POW)
         {
-            NodeValue node_pow = {};
-            node_pow.op = POW;
-
-            val = MakeNode(OP, node_pow, val, val_1);
+            val = MakeNode(OP, NodeValue{.op = POW}, val, val_1);
         }
     }
+    return val;
+}
 
+Node_t* GetFunc(Token_t* token)
+{
+    Node_t* val = NULL;
+    int operator = 0;
+
+    if(COMP_FUNC(SIN)   || COMP_FUNC(COS)    || COMP_FUNC(TG)   || COMP_FUNC(CTG)    || COMP_FUNC(ARCSIN) || COMP_FUNC(ARCCOS) ||
+       COMP_FUNC(ARCTG) || COMP_FUNC(ARCCTG) || COMP_FUNC(SH)   || COMP_FUNC(CH)     || COMP_FUNC(TH)     || COMP_FUNC(CTH) ||
+       COMP_FUNC(ARCSH) || COMP_FUNC(ARCCH)  || COMP_FUNC(ARCTH)|| COMP_FUNC(ARCCTH) || COMP_FUNC(LOG)    || COMP_FUNC(LN))
+    {
+        operator = token->str[token->point].value.op;
+
+        token->point++;
+
+        Node_t* val_1 = GetP(token);
+
+        if(operator == LOG)
+        {
+            Node_t* val_2 = GetP(token);
+
+            val = MakeNode(OP, NodeValue{.op = LOG}, val_1, val_2);
+        }
+        else
+        {
+            val = MakeNode(OP, NodeValue{.op = operator}, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL), val_1);
+        }
+
+        MAKE_NODE_IF(SIN);
+        MAKE_NODE_IF(COS);
+        MAKE_NODE_IF(TG);
+        MAKE_NODE_IF(CTG);
+        MAKE_NODE_IF(ARCSIN);
+        MAKE_NODE_IF(ARCCOS);
+        MAKE_NODE_IF(ARCTG);
+        MAKE_NODE_IF(ARCCTG);
+        MAKE_NODE_IF(SH);
+        MAKE_NODE_IF(CH);
+        MAKE_NODE_IF(TH);
+        MAKE_NODE_IF(CTH);
+        MAKE_NODE_IF(ARCSH);
+        MAKE_NODE_IF(ARCCH);
+        MAKE_NODE_IF(ARCTH);
+        MAKE_NODE_IF(ARCCTH);
+        MAKE_NODE_IF(LN);
+        {}
+    }
     return val;
 }
 
@@ -307,6 +339,10 @@ Node_t* GetP(Token_t* token)
 
         return val;
     }
+    else if(token->str[token->point].type == OP)
+    {
+        return GetFunc(token);
+    }
     else if(token->str[token->point].type == VAR)
     {
         return GetVariable(token);
@@ -319,7 +355,6 @@ Node_t* GetP(Token_t* token)
 
 Node_t* GetNumber(Token_t* token)
 {
-
     double val = 0;
 
     int old_p = token->point;
@@ -337,22 +372,16 @@ Node_t* GetNumber(Token_t* token)
         exit(0);
     }
 
-    NodeValue node_num = {};
-    node_num.num = val;
-
-    return MakeNode(NUM, node_num, NULL, NULL);
+    return MakeNode(NUM, NodeValue{.num = val}, NULL, NULL);
 }
 
 Node_t* GetVariable(Token_t* token)
 {
     if(token->str[token->point].value.var_num == X)
     {
-        NodeValue node_var = {};
-        node_var.var_num = X;
-
         token->point++;
 
-        return MakeNode(VAR, node_var, NULL, NULL);
+        return MakeNode(VAR, NodeValue{.var_num = X}, NULL, NULL);
     }
     else
     {

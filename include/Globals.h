@@ -99,6 +99,25 @@ enum Arg
 #define POW_(left, number)                                                     \
     MakeNode(OP, NodeValue{.op = POW}, left, MakeNode(NUM, NodeValue{.num = number}, NULL, NULL))
 
+#define SIN_(var)\
+    MakeNode(OP, NodeValue{.op = SIN}, var, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL))
+
+#define COS_(var)\
+    MakeNode(OP, NodeValue{.op = COS}, var, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL))
+
+#define SH_(var)\
+    MakeNode(OP, NodeValue{.op = SH}, var, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL))
+
+#define CH_(var)\
+    MakeNode(OP, NodeValue{.op = CH}, var, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL))
+
+#define LN_(var)\
+    MakeNode(OP, NodeValue{.op = LN}, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL), var)
+
+#define EXP_(var)\
+    MakeNode(OP, NodeValue{.op = POW}, MakeNode(OP, NodeValue{.op = EXP}, NULL, NULL), var)
+
+
 #define DIFF_(node)         \
     DiffExpression(node, diff, argv)
 

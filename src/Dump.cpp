@@ -9,27 +9,8 @@ void PrintInOrder(Node_t* node)
     PrintInOrder(node->left);
 
     if(node->type == OP)
-    { // TODO PrintOp
-        if(node->value.op == ADD)
-        {
-            printf("+");
-        }
-        else if(node->value.op == SUB)
-        {
-            printf("-");
-        }
-        else if(node->value.op == DIV)
-        {
-            printf("/");
-        }
-        else if(node->value.op == MUL)
-        {
-            printf("*");
-        }
-        else if(node->value.op == POW)
-        {
-            printf("^");
-        }
+    {
+        PrintInOrderOperator(node);
     }
     else if(node->type == NUM)
     {
@@ -42,7 +23,45 @@ void PrintInOrder(Node_t* node)
     PrintInOrder(node->right);
 
     printf(")");
+}
 
+void PrintInOrderOperator(Node_t* node)
+{
+    assert(node);
+
+    switch(node->value.op)
+    {
+        case ADD: printf("+"); break;
+
+        case SUB: printf("-"); break;
+
+        case MUL: printf("*"); break;
+
+        case DIV: printf("/"); break;
+
+        case POW: printf("^"); break;
+
+        case SIN: printf("sin"); break;
+
+        case COS: printf("cos"); break;
+
+        case TG: printf("tg"); break;
+
+        case CTG: printf("ctg"); break;
+
+        case LN: printf("ln"); break;
+
+        case LOG: printf("log"); break;
+
+        case EXP: printf("e"); break;
+
+        case SH: printf("sh"); break;
+
+        case CH: printf("ch"); break;
+
+        default:
+           printf("cannot defined operator: %d\n", node->value.op);
+    }
 }
 
 int GraphicDump(Node_t* node, const char** argv)
@@ -64,7 +83,7 @@ int GraphicDump(Node_t* node, const char** argv)
 
     //MySystem("dot Dump.dot -Tpng -o Dump%03d.png", count);
 
-    //system("dot Dump.dot -Tpng -o Dump.png");
+    system("dot Dump.dot -Tpng -o Dump.png");
 
     //count++;
 
@@ -82,13 +101,13 @@ int DrawNode(Node_t* node, FILE* dump)
 
     if(node->type == NUM)
     {
-        fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+        fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"olivedrab2\","
             " label = \"{ %lg | addr = %p | { left = %p | right = %p}}\"];\n", node, node->value.num, node, node->left, node->right);
     }
 
     if(node->type == VAR)
     {
-        fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
+        fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"firebrick1\","
             " label = \"{ x | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
     }
 
@@ -113,31 +132,39 @@ int DrawOperation(Node_t* node, FILE* dump)
     assert(node);
     assert(dump);
 
-    if(node->value.op == ADD)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{+| addr = %p | left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
-        }
-        else if(node->value.op == SUB)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ - | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
-        }
-        else if(node->value.op == DIV)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ / | addr = %p | { left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
-        }
-        else if(node->value.op == MUL)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ * | addr = %p | {left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
-        }
-        else if(node->value.op == POW)
-        {
-            fprintf(dump, "\"%p\" [shape = Mrecord, style = \"filled\", fillcolor = \"darkslateblue\","
-            " label = \"{ ^ | addr = %p | {left = %p | right = %p}}\"];\n", node, node, node->left, node->right);
-        }
+    switch(node->value.op)
+    {
+        case ADD: DRAW_GRAPHIC_OP(ADD, "+"); break;
+
+        case SUB: DRAW_GRAPHIC_OP(SUB, "-"); break;
+
+        case MUL: DRAW_GRAPHIC_OP(MUL, "*"); break;
+
+        case DIV: DRAW_GRAPHIC_OP(DIV, "/"); break;;
+
+        case SIN: DRAW_GRAPHIC_OP(SIN, "sin"); break;
+
+        case COS: DRAW_GRAPHIC_OP(COS, "cos"); break;
+
+        case TG: DRAW_GRAPHIC_OP(TG, "tg"); break;
+
+        case POW: DRAW_GRAPHIC_OP(POW, "^"); break;
+
+        case LN: DRAW_GRAPHIC_OP(LN, "ln"); break;
+
+        case LOG: DRAW_GRAPHIC_OP(LOG, "log"); break;
+
+        case EXP: DRAW_GRAPHIC_OP(EXP, "e"); break;
+
+        case SH: DRAW_GRAPHIC_OP(SH, "sh"); break;
+
+        case CH: DRAW_GRAPHIC_OP(CH, "ch"); break;
+
+        default:
+            printf("cannot defined operator: %d\n", node->value.op);
+            return -1;
+    }
+
     return 0;
 }
 
