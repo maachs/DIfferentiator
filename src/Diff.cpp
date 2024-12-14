@@ -86,6 +86,46 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
             {
                 return MUL_(SH_(Copy(node->right)), DIFF_(node->right));
             }
+            case TH:
+            {
+                return MUL_(DIV_(NUM_(1), POW_(CH_(node->right), 2)), DIFF_(node->right));
+            }
+            case CTH:
+            {
+                return MUL_(DIV_(NUM_(1), POW_(SH_(node->right), 2)), DIFF_(node->right));
+            }
+            case ARCSIN:
+            {
+                return MUL_(DIV_(NUM_(1), POW_(SUB_(NUM_(1), POW_(Copy(node->right), 2)), 0.5)), DIFF_(node->right));
+            }
+            case ARCCOS:
+            {
+                return MUL_(DIV_(NUM_(-1), POW_(SUB_(NUM_(1), POW_(Copy(node->right), 2)), 0.5)), DIFF_(node->right));
+            }
+            case ARCTG:
+            {
+                return MUL_(DIV_(NUM_(1), ADD_(NUM_(1), POW_(Copy(node->right), 2))), DIFF_(node->right));
+            }
+            case ARCCTG:
+            {
+                return MUL_(DIV_(NUM_(-1), ADD_(NUM_(1), POW_(Copy(node->right), 2))), DIFF_(node->right));
+            }
+            case ARCSH:
+            {
+                return MUL_(DIV_(NUM_(1), POW_(ADD_(POW_(Copy(node->right), 2), NUM_(1)), 0.5)), DIFF_(node->right));
+            }
+            case ARCCH:
+            {
+                return MUL_(DIV_(NUM_(1), POW_(SUB_(POW_(Copy(node->right), 2), NUM_(1)), 0.5)), DIFF_(node->right));
+            }
+            case ARCTH:
+            {
+                return MUL_(DIV_(NUM_(1), SUB_(NUM_(1), POW_(Copy(node->right), 2))), DIFF_(node->right));
+            }
+            case ARCCTH:
+            {
+                return MUL_(DIV_(NUM_(1), SUB_(NUM_(1), POW_(Copy(node->right), 2))), DIFF_(node->right));
+            }
             default:
                 printf("cannot defined operation %c\n", node->value.op);
                 return NULL;

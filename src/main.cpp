@@ -21,7 +21,7 @@ int main(const int argc, const char** argv)
     printf("\n");
     //root = SimplifyExpTree(root, argv);
 
-    //GraphicDump(root, argv);
+    GraphicDump(root, argv);
 
     Node_t* diff = DiffExpression(root, diff, argv);
     PrintInOrder(diff);

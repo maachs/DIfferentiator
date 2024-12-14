@@ -122,6 +122,24 @@ Node_t* SimplifyExpTree(Node_t* node, const char** argv)
             node->value.num = 0;
             DtorSimplyNodes(node);
         }
+        else if(node->value.op == POW && node->right->type == NUM && CompareNum(node->right->value.num, 0))
+        {
+            node->type = NUM;
+            node->value.num = 1;
+            DtorSimplyNodes(node);
+        }
+        else if(node->value.op == POW && node->right->type == NUM && CompareNum(node->right->value.num, 1))
+        {
+            TreeDtor(node->right);
+            node = Copy(node->left);
+        }
+        else if((node->value.op == LOG || node->value.op == LN) && node->left->type == NUM && CompareNum(node->left->value.num, 1))
+        {
+            node->type = NUM;
+            node->value.num = 0;
+
+            DtorSimplyNodes(node);
+        }
 
     }
 

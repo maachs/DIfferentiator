@@ -2,33 +2,21 @@ digraph G
 {
  rankdir = UD
 bgcolor = "aquamarine3"
-"00B17CA8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B17CA8 | { left = 00B17BC8 | right = 00B17BE8}}"];
-"00B17BC8" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 1 | addr = 00B17BC8 | { left = 00000000 | right = 00000000}}"];
-"00B17CA8"->"00B17BC8"
-"00B17BE8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B17BE8 | { left = 00B17C68 | right = 00B11870}}"];
-"00B17C68" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ cos | addr = 00B17C68 | { left = 00B17D48 | right = 00B11890}}"];
-"00B17D48" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ cos | addr = 00B17D48 | { left = 00B118D0 | right = 00B118B0}}"];
-"00B118D0" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 0 | addr = 00B118D0 | { left = 00000000 | right = 00000000}}"];
-"00B17D48"->"00B118D0"
-"00B118B0" [shape = Mrecord, style = "filled", fillcolor = "firebrick1", label = "{ x | addr = 00B118B0 | { left = 00000000 | right = 00000000}}"];
-"00B17D48"->"00B118B0"
-"00B17C68"->"00B17D48"
-"00B11890" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 0 | addr = 00B11890 | { left = 00000000 | right = 00000000}}"];
-"00B17C68"->"00B11890"
-"00B17BE8"->"00B17C68"
-"00B11870" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B11870 | { left = 00B11850 | right = 00B11830}}"];
-"00B11850" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ -1 | addr = 00B11850 | { left = 00000000 | right = 00000000}}"];
-"00B11870"->"00B11850"
-"00B11830" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00B11830 | { left = 00B11810 | right = 00B117B0}}"];
-"00B11810" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ sin | addr = 00B11810 | { left = 00B117F0 | right = 00B117D0}}"];
-"00B117F0" [shape = Mrecord, style = "filled", fillcolor = "firebrick1", label = "{ x | addr = 00B117F0 | { left = 00000000 | right = 00000000}}"];
-"00B11810"->"00B117F0"
-"00B117D0" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 0 | addr = 00B117D0 | { left = 00000000 | right = 00000000}}"];
-"00B11810"->"00B117D0"
-"00B11830"->"00B11810"
-"00B117B0" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 1 | addr = 00B117B0 | { left = 00000000 | right = 00000000}}"];
-"00B11830"->"00B117B0"
-"00B11870"->"00B11830"
-"00B17BE8"->"00B11870"
-"00B17CA8"->"00B17BE8"
+"00941848" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ * | addr = 00941848 | { left = 00941828 | right = 00941748}}"];
+"00941828" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ / | addr = 00941828 | { left = 00941808 | right = 009417E8}}"];
+"00941808" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 1 | addr = 00941808 | { left = 00000000 | right = 00000000}}"];
+"00941828"->"00941808"
+"009417E8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ - | addr = 009417E8 | { left = 009417C8 | right = 009417A8}}"];
+"009417C8" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 1 | addr = 009417C8 | { left = 00000000 | right = 00000000}}"];
+"009417E8"->"009417C8"
+"009417A8" [shape = Mrecord, style = "filled", fillcolor = "darkslateblue", label = "{ ^ | addr = 009417A8 | { left = 00941788 | right = 00941768}}"];
+"00941788" [shape = Mrecord, style = "filled", fillcolor = "firebrick1", label = "{ x | addr = 00941788 | { left = 00000000 | right = 00000000}}"];
+"009417A8"->"00941788"
+"00941768" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 2 | addr = 00941768 | { left = 00000000 | right = 00000000}}"];
+"009417A8"->"00941768"
+"009417E8"->"009417A8"
+"00941828"->"009417E8"
+"00941848"->"00941828"
+"00941748" [shape = Mrecord, style = "filled", fillcolor = "olivedrab2", label = "{ 1 | addr = 00941748 | { left = 00000000 | right = 00000000}}"];
+"00941848"->"00941748"
 }

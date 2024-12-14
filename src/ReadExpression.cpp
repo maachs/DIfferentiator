@@ -276,19 +276,19 @@ Node_t* GetD(Token_t* token)
 Node_t* GetFunc(Token_t* token)
 {
     Node_t* val = NULL;
-    int operator = 0;
+    int oper = 0;
 
     if(COMP_FUNC(SIN)   || COMP_FUNC(COS)    || COMP_FUNC(TG)   || COMP_FUNC(CTG)    || COMP_FUNC(ARCSIN) || COMP_FUNC(ARCCOS) ||
        COMP_FUNC(ARCTG) || COMP_FUNC(ARCCTG) || COMP_FUNC(SH)   || COMP_FUNC(CH)     || COMP_FUNC(TH)     || COMP_FUNC(CTH) ||
        COMP_FUNC(ARCSH) || COMP_FUNC(ARCCH)  || COMP_FUNC(ARCTH)|| COMP_FUNC(ARCCTH) || COMP_FUNC(LOG)    || COMP_FUNC(LN))
     {
-        operator = token->str[token->point].value.op;
+        oper = token->str[token->point].value.op;
 
         token->point++;
 
         Node_t* val_1 = GetP(token);
 
-        if(operator == LOG)
+        if(oper == LOG)
         {
             Node_t* val_2 = GetP(token);
 
@@ -296,27 +296,8 @@ Node_t* GetFunc(Token_t* token)
         }
         else
         {
-            val = MakeNode(OP, NodeValue{.op = operator}, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL), val_1);
+            val = MakeNode(OP, NodeValue{.op = oper}, MakeNode(NUM, NodeValue{.num = 0}, NULL, NULL), val_1);
         }
-
-        MAKE_NODE_IF(SIN);
-        MAKE_NODE_IF(COS);
-        MAKE_NODE_IF(TG);
-        MAKE_NODE_IF(CTG);
-        MAKE_NODE_IF(ARCSIN);
-        MAKE_NODE_IF(ARCCOS);
-        MAKE_NODE_IF(ARCTG);
-        MAKE_NODE_IF(ARCCTG);
-        MAKE_NODE_IF(SH);
-        MAKE_NODE_IF(CH);
-        MAKE_NODE_IF(TH);
-        MAKE_NODE_IF(CTH);
-        MAKE_NODE_IF(ARCSH);
-        MAKE_NODE_IF(ARCCH);
-        MAKE_NODE_IF(ARCTH);
-        MAKE_NODE_IF(ARCCTH);
-        MAKE_NODE_IF(LN);
-        {}
     }
     return val;
 }

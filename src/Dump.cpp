@@ -59,6 +59,20 @@ void PrintInOrderOperator(Node_t* node)
 
         case CH: printf("ch"); break;
 
+        case ARCSIN: printf("arcsin"); break;
+
+        case ARCTG: printf("arcsin"); break;
+
+        case ARCCTG: printf("arcctg"); break;
+
+        case ARCSH: printf("arcsh"); break;
+
+        case ARCCH: printf("arcch"); break;
+
+        case ARCTH: printf("arcth"); break;
+
+        case ARCCTH: printf("arccth"); break;
+
         default:
            printf("cannot defined operator: %d\n", node->value.op);
     }
@@ -160,6 +174,26 @@ int DrawOperation(Node_t* node, FILE* dump)
 
         case CH: DRAW_GRAPHIC_OP(CH, "ch"); break;
 
+        case TH: DRAW_GRAPHIC_OP(TH, "th"); break;
+
+        case CTH: DRAW_GRAPHIC_OP(CTH, "cth"); break;
+
+        case ARCSIN: DRAW_GRAPHIC_OP(ARCSIN, "arcsin"); break;
+
+        case ARCCOS: DRAW_GRAPHIC_OP(ARCCOS, "arccos"); break;
+
+        case ARCTG: DRAW_GRAPHIC_OP(ARCTG, "arctg"); break;
+
+        case ARCCTG: DRAW_GRAPHIC_OP(ARCCTG, "arcctg"); break;
+
+        case ARCSH: DRAW_GRAPHIC_OP(ARCSH, "arcsh"); break;
+
+        case ARCCH: DRAW_GRAPHIC_OP(ARCCH, "arcch"); break;
+
+        case ARCTH: DRAW_GRAPHIC_OP(ARCTH, "arcth"); break;
+
+        case ARCCTH: DRAW_GRAPHIC_OP(ARCCTH, "arccth"); break;
+
         default:
             printf("cannot defined operator: %d\n", node->value.op);
             return -1;
@@ -176,4 +210,21 @@ void MySystem(const char* str, int number_dump)
 
     system(command_dot);
 
+}
+
+int TexDump(Node_t* node, const char** argv)
+{
+    assert(node);
+    assert(argv);
+
+    FILE* tex_file = fopen(argv[3], "w");
+
+    if(tex_file == NULL)
+    {
+        printf("cannot open file: %s\n", argv[3]);
+
+        return -1;
+    }
+
+    return 0;
 }
