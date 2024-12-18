@@ -5,17 +5,17 @@
 
 int ReadExpression(Token_t* token, const char** argv, int size);
 int FillNodes     (Token_t* token, char* expression, int size);
-int FillFunction   (Token_t* token, char* expression);
-int FillOperation  (Token_t* token, char* expression);
+int FillFunction  (Token_t* token, char* expression);
+int FillOperation (Token_t* token, char* expression);
 
 Node_t* GetGrammar (Token_t* token);
 Node_t* GetEquation(Token_t* token);
 Node_t* GetNumber  (Token_t* token);
-Node_t* GetT(Token_t* token);
-Node_t* GetP(Token_t* token);
+Node_t* GetMulDiv  (Token_t* token);
+Node_t* GetBrackets(Token_t* token);
 Node_t* GetVariable(Token_t* token);
-Node_t* GetD(Token_t* token);
-Node_t* GetFunc(Token_t* token);
+Node_t* GetDeg     (Token_t* token);
+Node_t* GetFunc    (Token_t* token);
 
 #define NEW_FUNC_(var, delta)             \
     token->str[token->count].type = OP;      \

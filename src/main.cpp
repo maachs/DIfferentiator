@@ -25,7 +25,7 @@ int main(const int argc, const char** argv)
 
     Node_t* diff = DiffExpression(root, diff, argv);
     PrintInOrder(diff);
-    //diff = SimplifyExpTree(diff, argv);
+    diff = SimplifyExpTree(diff, argv);
 
     PrintInOrder(root);
     printf("\n");

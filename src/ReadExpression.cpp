@@ -205,7 +205,7 @@ Node_t* GetGrammar(Token_t* token)
 
 Node_t* GetEquation(Token_t* token)
 {
-    Node_t* val = GetT(token);
+    Node_t* val = GetMulDiv(token);
 
     while(token->str[token->point].value.op == ADD || token->str[token->point].value.op == SUB)
     {
@@ -213,7 +213,7 @@ Node_t* GetEquation(Token_t* token)
 
         token->point++;
 
-        Node_t* val_1 = GetT(token);
+        Node_t* val_1 = GetMulDiv(token);
 
         if(op == ADD)
         {
@@ -228,9 +228,9 @@ Node_t* GetEquation(Token_t* token)
     return val;
 }
 
-Node_t* GetT(Token_t* token)
+Node_t* GetMulDiv(Token_t* token)
 {
-    Node_t* val = GetD(token);
+    Node_t* val = GetDeg(token);
 
     while(token->str[token->point].value.op == MUL || token->str[token->point].value.op == DIV)
     {
@@ -238,7 +238,7 @@ Node_t* GetT(Token_t* token)
 
         token->point++;
 
-        Node_t* val_1 = GetD(token);
+        Node_t* val_1 = GetDeg(token);
 
         if(op == MUL)
         {
@@ -253,9 +253,9 @@ Node_t* GetT(Token_t* token)
     return val;
 }
 
-Node_t* GetD(Token_t* token)
+Node_t* GetDeg(Token_t* token)
 {
-    Node_t* val = GetP(token);
+    Node_t* val = GetBrackets(token);
 
     while(token->str[token->point].value.op == POW)
     {
@@ -263,7 +263,7 @@ Node_t* GetD(Token_t* token)
 
         token->point++;
 
-        Node_t* val_1 = GetP(token);
+        Node_t* val_1 = GetBrackets(token);
 
         if(op_pow == POW)
         {
@@ -286,11 +286,11 @@ Node_t* GetFunc(Token_t* token)
 
         token->point++;
 
-        Node_t* val_1 = GetP(token);
+        Node_t* val_1 = GetBrackets(token);
 
         if(oper == LOG)
         {
-            Node_t* val_2 = GetP(token);
+            Node_t* val_2 = GetBrackets(token);
 
             val = MakeNode(OP, NodeValue{.op = LOG}, val_1, val_2);
         }
@@ -302,7 +302,7 @@ Node_t* GetFunc(Token_t* token)
     return val;
 }
 
-Node_t* GetP(Token_t* token)
+Node_t* GetBrackets(Token_t* token)
 {
     if(token->str[token->point].value.op == OPEN_BRACKETS)
     {
