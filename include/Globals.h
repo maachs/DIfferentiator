@@ -119,7 +119,7 @@ enum Arg
 
 
 #define DIFF_(node)         \
-    DiffExpression(node, diff, argv)
+    DiffExpression(node, diff, tex_file, count_phrase)
 
 
 #endif

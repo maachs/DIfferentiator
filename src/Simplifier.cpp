@@ -2,13 +2,14 @@
 
 Node_t* SimplifyExpTree(Node_t* node, const char** argv)
 {
-    assert(node);
+    //assert(node);
 
     if(node->left == NULL && node->right == NULL) return node;
 
-    node->left = SimplifyExpTree(node->left, argv);
+    node->left  = SimplifyExpTree(node->left, argv);
     node->right = SimplifyExpTree(node->right, argv);
 
+    //GraphicDump(node, argv);
     if(node->type == OP)
     {
         if(node->left->type == NUM && node->right->type == NUM)
@@ -45,13 +46,6 @@ Node_t* SimplifyExpTree(Node_t* node, const char** argv)
             {
                 node->type = NUM;
                 node->value.num = node->left->value.num / node->right->value.num;
-
-                DtorSimplyNodes(node);
-            }
-            else if(node->value.op == POW)
-            {
-                node->type = NUM;
-                node->value.num = pow(node->left->value.num, node->right->value.num);
 
                 DtorSimplyNodes(node);
             }
@@ -102,6 +96,7 @@ Node_t* SimplifyExpTree(Node_t* node, const char** argv)
         }
         else if(node->left->type == NUM && CompareNum(node->left->value.num, 0) && node->value.op == ADD)
         {
+
             TreeDtor(node->left);
             node = Copy(node->right);
         }

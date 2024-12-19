@@ -1,20 +1,21 @@
 #include "Diff.h"
 
-Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
+Node_t* DiffExpression(Node_t* node, Node_t* diff, FILE* tex_file, int* count_phrase)
 {
-    assert(argv);
+    assert(tex_file);
+    assert(count_phrase);
 
     //GraphicDump(node, argv);
-
+    //TexDump(node, diff, tex_file, count_phrase);
     if(node->type == NUM)
     {
-        //NUM_(0 ,12);
-
+        //TexDump(node, NUM_(0), tex_file, count_phrase);
         return NUM_(0);
     }
 
     if(node->type == VAR)
     {
+        //TexDump(node, NUM_(1), tex_file, count_phrase);
         return NUM_(1);
     }
 
@@ -24,10 +25,12 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
         {
             case ADD:
             {
+                //TexDump(node, ADD_(DIFF_(node->left), DIFF_(node->right)), tex_file, count_phrase);
                 return ADD_(DIFF_(node->left), DIFF_(node->right));
             }
             case SUB:
             {
+                //TexDump(node, SUB_(DIFF_(node->left), DIFF_(node->right)), tex_file, count_phrase);
                 return SUB_(DIFF_(node->left), DIFF_(node->right));
             }
             case MUL:
@@ -37,6 +40,8 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
 
                 Node_t* copy_left_mul  = Copy(node->left);
                 Node_t* copy_right_mul = Copy(node->right);
+
+                //TexDump(node, ADD_(MUL_(dl_mul, copy_right_mul), MUL_(dr_mul, copy_left_mul)), tex_file, count_phrase);
 
                 return ADD_(MUL_(dl_mul, copy_right_mul), MUL_(dr_mul, copy_left_mul));
             }
@@ -48,22 +53,32 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
                 Node_t* copy_left_div  = Copy(node->left);
                 Node_t* copy_right_div = Copy(node->right);
 
+                //TexDump(node, DIV_(SUB_(MUL_(dl_div, copy_right_div), MUL_(dr_div, copy_left_div)), POW_(copy_right_div, 2)), tex_file, count_phrase);
+
                 return DIV_(SUB_(MUL_(dl_div, copy_right_div), MUL_(dr_div, copy_left_div)), POW_(copy_right_div, 2));
             }
             case POW:
             {
+                //TexDump(node, MUL_(Copy(node), DIFF_(MUL_(LN_(node->left), Copy(node->right)))), tex_file, count_phrase);
+
                 return MUL_(Copy(node), DIFF_(MUL_(LN_(node->left), Copy(node->right))));
             }
             case SIN:
             {
+                //TexDump(node, MUL_(NUM_(1), MUL_(COS_(Copy(node->right)), DIFF_(node->right))), tex_file, count_phrase);
+
                 return MUL_(NUM_(1), MUL_(COS_(Copy(node->right)), DIFF_(node->right)));
             }
             case COS:
             {
+                //TexDump(node, MUL_(NUM_(-1), MUL_(SIN_(Copy(node->right)), DIFF_(node->right))), tex_file, count_phrase);
+
                 return MUL_(NUM_(-1), MUL_(SIN_(Copy(node->right)), DIFF_(node->right)));
             }
             case TG:
             {
+                //TexDump(node, MUL_(DIV_(NUM_(1), POW_(COS_(Copy(node->right)), 2)), DIFF_(node->right)), tex_file, count_phrase);
+
                 return MUL_(DIV_(NUM_(1), POW_(COS_(Copy(node->right)), 2)), DIFF_(node->right));
             }
             case CTG:
@@ -76,6 +91,8 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
             }
             case LN:
             {
+                //TexDump(node, MUL_(DIV_(NUM_(1), Copy(node->right)), DIFF_(node->right)), tex_file, count_phrase);
+
                 return MUL_(DIV_(NUM_(1), Copy(node->right)), DIFF_(node->right));
             }
             case SH:
@@ -131,7 +148,6 @@ Node_t* DiffExpression(Node_t* node, Node_t* diff, const char** argv)
                 return NULL;
         }
     }
-
     return NULL;
 }
 

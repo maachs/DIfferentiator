@@ -5,9 +5,20 @@ int main(const int argc, const char** argv)
     Token_t token = {};
     struct stat buffer = {};
 
-    if(argc != 3)
+    if(argc != 4)
     {
         printf("usage: argv[0] <%s>\n", argv[0]);
+
+        return -1;
+    }
+
+    int count_phrase = 0;
+
+    FILE* tex_file = fopen(argv[3], "w");
+
+    if(tex_file == NULL)
+    {
+        printf("cannot open file: %s\n", argv[3]);
 
         return -1;
     }
@@ -17,24 +28,31 @@ int main(const int argc, const char** argv)
     ReadExpression(&token, argv, buffer.st_size);
 
     Node_t* root = GetGrammar(&token);
+
+    BeginTexDump(root, tex_file);
+
     PrintInOrder(root);
     printf("\n");
     //root = SimplifyExpTree(root, argv);
 
-    GraphicDump(root, argv);
+    //GraphicDump(root, argv);
 
-    Node_t* diff = DiffExpression(root, diff, argv);
+    Node_t* diff = DiffExpression(root, diff, tex_file, &count_phrase);
     PrintInOrder(diff);
     diff = SimplifyExpTree(diff, argv);
-
-    PrintInOrder(root);
+    TexDump(root, diff, tex_file, &count_phrase);
+    //PrintInOrder(root);
     printf("\n");
+    PrintInOrder(diff);
+    printf("\n");
+
+    TexEnd(tex_file);
+    fclose(tex_file);
+    //printf("-----------\n");
     //PrintInOrder(diff);
-    printf("\n");
-
     GraphicDump(diff, argv);
-    TreeDtor(root);
 
+    TreeDtor(root);
     TreeDtor(diff);
     TokenDtor(&token);
 }
