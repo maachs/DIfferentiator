@@ -348,7 +348,7 @@ int DrawTexNode(Node_t* node, FILE* tex_file)
         }
         else if(node->value.op == LN)
         {
-            DrawTexOperation(node->right, tex_file);
+            DrawTexOperation(node, tex_file);
 
             fprintf(tex_file, "(");
             DrawTexNode(node->right, tex_file);

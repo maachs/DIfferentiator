@@ -27,6 +27,6 @@ int TexDump              (Node_t* node, Node_t* diff, FILE* tex_file, int* count
         " label = \"{ %s | addr = %p | { left = %p | right = %p}}\"];\n", node, operator, node, node->left, node->right);
 
 #define DRAW_TEX_OP(operator)\
-        fprintf(tex_file, "%s", operator)
+        fprintf(tex_file, " %s ", operator)
 
 #endif
